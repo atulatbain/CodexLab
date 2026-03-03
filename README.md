@@ -1,4 +1,4 @@
-# codex-task-tracker-lab
+# CodexLab: Task Tracker Lab
 
 A hands-on repository for OpenAI partners learning how to use Codex App for macOS or Codex Cloud on a realistic but compact backend project.
 
@@ -9,6 +9,8 @@ In this lab, you will use Codex to explore an unfamiliar codebase, diagnose bugs
 This is a Codex-first lab. Learners should accomplish each task by prompting Codex to inspect the repo, run commands, edit code, explain findings, and prepare Git changes. The learner's job is to direct Codex, review its diffs, and verify the results.
 
 The application is a minimal task manager API built with FastAPI. It stores tasks in a local JSON file and exposes endpoints for listing, creating, and completing tasks.
+
+Canonical repository for this lab: `https://github.com/pavlinhristov/CodexLab`
 
 Estimated time: 30 to 45 minutes.
 
@@ -45,7 +47,7 @@ Make sure you have the following installed:
 ## Repository Structure
 
 ```text
-codex-task-tracker-lab/
+CodexLab/
 ├── README.md
 ├── .gitignore
 ├── requirements.txt
@@ -70,15 +72,32 @@ Use one of the following:
 
 Recommended first prompt:
 
-- `Set up this repository for development. Create a virtual environment, install the dependencies, and start the FastAPI app. Tell me what commands you ran and whether the server started successfully.`
+- `Set up this repository for development. Create a virtual environment, install the dependencies, and start the FastAPI app in a way that lets us keep testing it during the lab. Tell me what commands you ran and whether the server started successfully.`
 
-### 1. Fork and clone the repository
+### 1. Start from the canonical lab repository
 
-Fork this repository to your own GitHub account, then clone your fork:
+All learners should start from:
+
+- `https://github.com/pavlinhristov/CodexLab`
+
+Recommended Git workflow for the lab:
+
+1. Fork `pavlinhristov/CodexLab` to your own GitHub account if you want to push your finished work.
+2. Clone your fork locally.
+3. If you are only doing a local practice run, you can clone the canonical repo directly instead.
+
+Clone your fork:
 
 ```bash
-git clone https://github.com/YOUR_GITHUB_USERNAME/codex-task-tracker-lab.git
-cd codex-task-tracker-lab
+git clone https://github.com/YOUR_GITHUB_USERNAME/CodexLab.git
+cd CodexLab
+```
+
+Or clone the canonical repo directly:
+
+```bash
+git clone https://github.com/pavlinhristov/CodexLab.git
+cd CodexLab
 ```
 
 ### 2. Ask Codex to create and activate a virtual environment
@@ -116,6 +135,8 @@ The API will be available at:
 Suggested Codex prompt:
 
 - `Start the FastAPI app and confirm the local URL I should use for testing.`
+
+If you are using Codex Cloud, ask Codex to keep the server running in one session and use separate commands in the same workspace to test it. You do not need browser access for the lab to work.
 
 ## Lab Tasks
 
@@ -255,9 +276,12 @@ What Codex should do for you in this task:
 
 After your fixes and feature work are complete, have Codex prepare the Git workflow for you.
 
+Before committing, ask Codex to check whether `data/tasks.json` changed only because you exercised the API during testing. If it did, restore that file so your final commit contains code and documentation changes, not runtime data churn.
+
 Ask Codex to:
 
 - create a new branch
+- review whether `data/tasks.json` should be reverted
 - show the changed files
 - summarize the edits
 - create a commit once you approve the diff
@@ -274,6 +298,10 @@ git push origin codex/lab-fixes
 
 If you forked the repository at the start of the lab, you can then open a pull request from your branch.
 
+Suggested cleanup prompt before the commit:
+
+- `Check whether data/tasks.json changed only because of runtime testing. If so, restore it before we commit.`
+
 Suggested Codex prompts:
 
 - `Create a new branch named codex/lab-fixes, review the diff, and suggest a concise commit message.`
@@ -287,6 +315,8 @@ Use the commands below after you finish the lab, or ask Codex to run them and su
 Suggested verification prompt:
 
 - `Run the verification steps for this lab and tell me whether the repository now behaves correctly.`
+
+Note: the completion endpoint writes to `data/tasks.json` after you fix Bug B. That is expected during testing. Just make sure you ask Codex to review that file before the final commit.
 
 ### Verify the application still runs
 
@@ -353,4 +383,5 @@ If you want a simple path through the lab, try this sequence:
 - The goal of the lab is to practice directing Codex effectively while still validating the results yourself.
 - Strong prompts are action-oriented: ask Codex to inspect, explain, fix, verify, and summarize.
 - Treat Codex like an engineering teammate: delegate the work, then review the output carefully.
+- The canonical starting point for the lab is `github.com/pavlinhristov/CodexLab`.
 - Use the API docs at `http://127.0.0.1:8000/docs` if you prefer testing from a browser instead of `curl`.
