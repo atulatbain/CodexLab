@@ -10,13 +10,17 @@ def list_tasks(status: str | None = None, q: str | None = None) -> list[dict[str
     """Return task records, optionally filtered by status and search text."""
     tasks = load_tasks()
     filtered: list[dict[str, Any]] = []
+    query = q.lower() if q else None
 
     for task in tasks:
         if status and task["status"] != status:
             continue
 
-        # Instructor note: partial feature for the lab.
-        # The route already accepts `q`, but search is not implemented yet.
+        if query:
+            haystack = f'{task["title"]} {task["description"]}'.lower()
+            if query not in haystack:
+                continue
+
         filtered.append(task)
 
     return filtered
